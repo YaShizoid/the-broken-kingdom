@@ -1,6 +1,7 @@
-[gd_scene load_steps=24 format=3 uid="uid://cf55qtwyek5rb"]
+[gd_scene load_steps=33 format=3 uid="uid://cf55qtwyek5rb"]
 
 [ext_resource type="Texture2D" uid="uid://cc48w6kvtsdeo" path="res://romario-tileMap/decor_16x16.png" id="1_7ghph"]
+[ext_resource type="Script" uid="uid://dho30c4umbj2e" path="res://script/world.gd" id="1_bqa5m"]
 [ext_resource type="Script" uid="uid://cr54sagyhhktt" path="res://script/label.gd" id="1_f345f"]
 [ext_resource type="PackedScene" uid="uid://bwli4b6843s0n" path="res://scene/player.tscn" id="1_pjass"]
 [ext_resource type="Texture2D" uid="uid://dudkhypui8lyh" path="res://romario-tileMap/Fences.png" id="2_na5tu"]
@@ -13,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bs22elhqxsbwa" path="res://romario-tileMap/plains.png" id="9_e4vd1"]
 [ext_resource type="PackedScene" uid="uid://c2t4gyw6syd8r" path="res://scene/enemy.tscn" id="11_na5tu"]
 [ext_resource type="Script" uid="uid://bqqip3rmqlgbf" path="res://script/camera_2d.gd" id="13_bqa5m"]
+[ext_resource type="Texture2D" uid="uid://dcl0tp8bdpern" path="res://circle.png" id="15_a0bac"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1402k"]
 texture = ExtResource("1_7ghph")
@@ -508,8 +510,209 @@ sources/6 = SubResource("TileSetAtlasSource_qfj6m")
 sources/7 = SubResource("TileSetAtlasSource_n02kn")
 sources/8 = SubResource("TileSetAtlasSource_puhxk")
 
+[sub_resource type="Animation" id="Animation_bqa5m"]
+length = 1.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("enemy/AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("enemy/AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Attack"]
+}
+
+[sub_resource type="Animation" id="Animation_hnm4a"]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("enemy/AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("enemy/AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Death"]
+}
+
+[sub_resource type="Animation" id="Animation_e4vd1"]
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("enemy/AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("enemy/AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Idle"]
+}
+
+[sub_resource type="Animation" id="Animation_tmyho"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PointLight2D:texture_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.01]
+}
+
+[sub_resource type="Animation" id="Animation_1402k"]
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("enemy/AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("enemy/AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Walk"]
+}
+
+[sub_resource type="Animation" id="Animation_a0bac"]
+resource_name = "day-night"
+length = 20.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 5.01, 9.99011, 15.0401, 20),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.8, 0.8, 0.0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"days_plus"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/days:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PointLight2D:texture_scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 5, 10, 15, 20),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.01, 0.01, 1.5, 1.5, 0.01]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hnm4a"]
+_data = {
+&"Attack": SubResource("Animation_bqa5m"),
+&"Death": SubResource("Animation_hnm4a"),
+&"Idle": SubResource("Animation_e4vd1"),
+&"RESET": SubResource("Animation_tmyho"),
+&"Walk": SubResource("Animation_1402k"),
+&"day-night": SubResource("Animation_a0bac")
+}
+
 [node name="world" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_bqa5m")
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -578,5 +781,40 @@ polygon = PackedVector2Array(118, -14, 118, -7, 96, -7, 96, -14)
 polygon = PackedVector2Array(-25, -11, -25, -13, -18, -13, -18, -11)
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_hnm4a")
+}
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+energy = 0.0
+blend_mode = 1
+max_distance = 10005.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="days" type="Label" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+z_index = 1
+offset_left = 11.0
+offset_top = 14.0
+offset_right = 152.0
+offset_bottom = 83.0
+theme_override_font_sizes/font_size = 25
+text = "0 DAY"
+
+[node name="time" type="Label" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(552, 240)
+scale = Vector2(0.1925, 0.1925)
+color = Color(0.897253, 0.296999, 0, 1)
+energy = 1.5
+shadow_color = Color(0.654902, 0.517647, 0, 0)
+texture = ExtResource("15_a0bac")
+texture_scale = 0.01
 
 [connection signal="timeout" from="Timer" to="player" method="_on_timer_timeout"]
