@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cf55qtwyek5rb"]
+[gd_scene load_steps=36 format=3 uid="uid://cf55qtwyek5rb"]
 
 [ext_resource type="Texture2D" uid="uid://cc48w6kvtsdeo" path="res://romario-tileMap/decor_16x16.png" id="1_7ghph"]
 [ext_resource type="Script" uid="uid://dho30c4umbj2e" path="res://script/world.gd" id="1_bqa5m"]
@@ -15,6 +15,9 @@
 [ext_resource type="PackedScene" uid="uid://c2t4gyw6syd8r" path="res://scene/enemy.tscn" id="11_na5tu"]
 [ext_resource type="Script" uid="uid://bqqip3rmqlgbf" path="res://script/camera_2d.gd" id="13_bqa5m"]
 [ext_resource type="Texture2D" uid="uid://dcl0tp8bdpern" path="res://circle.png" id="15_a0bac"]
+[ext_resource type="Texture2D" uid="uid://c8xdl8ymd5ysg" path="res://Sprite-0003.png" id="16_e4vd1"]
+[ext_resource type="Texture2D" uid="uid://b6chk5jx28b6p" path="res://Sprite-0001.png" id="17_1402k"]
+[ext_resource type="Texture2D" uid="uid://depkm3fwm2s8n" path="res://Sprite-0002 (1).png" id="18_ol7uo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1402k"]
 texture = ExtResource("1_7ghph")
@@ -108,13 +111,11 @@ texture = ExtResource("4_f345f")
 4:4/0 = 0
 4:4/0/z_index = 1
 0:5/0 = 0
-0:5/0/z_index = 1
 1:5/0 = 0
 1:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -1.84332, -8, -1.57999, 8, -1.84332, 0.658325, -8, -8, -2.10665)
 2:5/0 = 0
 3:5/0 = 0
 4:5/0 = 0
-4:5/0/z_index = 1
 0:6/0 = 0
 0:6/0/y_sort_origin = -9
 1:6/0 = 0
@@ -648,7 +649,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_a0bac"]
 resource_name = "day-night"
-length = 20.0
+length = 60.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -656,7 +657,7 @@ tracks/0/path = NodePath("DirectionalLight2D:energy")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.0333333, 5.01, 9.99011, 15.0401, 20),
+"times": PackedFloat32Array(0.0333333, 14.9667, 29.9667, 45.3, 59.9333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, 0.8, 0.8, 0.0]
@@ -694,7 +695,7 @@ tracks/3/path = NodePath("PointLight2D:texture_scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 5, 10, 15, 20),
+"times": PackedFloat32Array(0, 14.9667, 30.1333, 45.1333, 60),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [0.01, 0.01, 1.5, 1.5, 0.01]
@@ -758,9 +759,6 @@ limit_left = 0
 limit_top = 0
 limit_right = 1150
 limit_bottom = 650
-position_smoothing_enabled = true
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
 script = ExtResource("13_bqa5m")
 
 [node name="collision" type="StaticBody2D" parent="."]
@@ -796,17 +794,32 @@ max_distance = 10005.0
 
 [node name="days" type="Label" parent="CanvasLayer"]
 modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 1, 1, 0.643137)
 z_index = 1
-offset_left = 11.0
-offset_top = 14.0
-offset_right = 152.0
-offset_bottom = 83.0
-theme_override_font_sizes/font_size = 25
+offset_left = 293.0
+offset_top = 183.0
+offset_right = 856.0
+offset_bottom = 456.0
+theme_override_font_sizes/font_size = 200
 text = "0 DAY"
 
 [node name="time" type="Label" parent="CanvasLayer"]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 7.0
+offset_top = 44.0
+offset_right = 47.0
+offset_bottom = 67.0
+
+[node name="hp-bar" type="TextureProgressBar" parent="CanvasLayer"]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 177.0
+offset_bottom = 43.0
+nine_patch_stretch = true
+texture_under = ExtResource("16_e4vd1")
+texture_over = ExtResource("17_1402k")
+texture_progress = ExtResource("18_ol7uo")
+tint_over = Color(0.494508, 0.436245, 0.373642, 1)
+tint_progress = Color(0.693793, 0.0286376, 0.0511062, 1)
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(552, 240)

@@ -1,7 +1,9 @@
-[gd_scene load_steps=36 format=3 uid="uid://c2t4gyw6syd8r"]
+[gd_scene load_steps=41 format=3 uid="uid://c2t4gyw6syd8r"]
 
 [ext_resource type="Script" uid="uid://bqkke0muc60oe" path="res://script/enemy.gd" id="1_f87vc"]
 [ext_resource type="Texture2D" uid="uid://b7sx2so1qmkqq" path="res://slime.png" id="2_8u16h"]
+[ext_resource type="Texture2D" uid="uid://c8xdl8ymd5ysg" path="res://Sprite-0003.png" id="3_b7koy"]
+[ext_resource type="Texture2D" uid="uid://depkm3fwm2s8n" path="res://Sprite-0002 (1).png" id="4_yvcfn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f87vc"]
 atlas = ExtResource("2_8u16h")
@@ -184,13 +186,13 @@ animations = [{
 radius = 109.041
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yvcfn"]
-radius = 15.0333
+radius = 14.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f87vc"]
-radius = 13.0384
+radius = 23.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qhqle"]
-radius = 17.0
+radius = 19.0263
 
 [sub_resource type="Animation" id="Animation_8u16h"]
 length = 2.0
@@ -222,7 +224,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/2/path = NodePath("Radius/Radius_attacki:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -271,6 +273,18 @@ tracks/5/keys = {
 "args": [],
 "method": &"shaking_false"
 }]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("TextureProgressBar:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.733333, 1.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-19, -19), Vector2(-19, -19), Vector2(-19, -39), Vector2(-19, -19)]
 }
 
 [sub_resource type="Animation" id="Animation_b7koy"]
@@ -332,7 +346,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/0/path = NodePath("Radius/Radius_attacki:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -364,6 +378,18 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TextureProgressBar:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-19, -19)]
 }
 
 [sub_resource type="Animation" id="Animation_ulb22"]
@@ -403,6 +429,67 @@ _data = {
 &"Walk": SubResource("Animation_ulb22")
 }
 
+[sub_resource type="Animation" id="Animation_vgurf"]
+resource_name = "take_damage"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D/hp_damage:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.884314, 3.20069e-06, 1.15514e-06, 1), Color(0.88, 0, 0, 0.0313726)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node2D/hp_damage:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-30, -75), Vector2(-35, -350)]
+}
+
+[sub_resource type="Animation" id="Animation_kqmod"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D/hp_damage:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.884314, 3.20069e-06, 1.15514e-06, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node2D/hp_damage:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-30, -85)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kqmod"]
+_data = {
+&"RESET": SubResource("Animation_kqmod"),
+&"take_damage": SubResource("Animation_vgurf")
+}
+
 [node name="enemy" type="CharacterBody2D"]
 y_sort_enabled = true
 collision_layer = 4
@@ -421,15 +508,15 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detector"]
 shape = SubResource("CircleShape2D_b7koy")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="HitBox" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
 shape = SubResource("CircleShape2D_yvcfn")
 
-[node name="HitBox" type="Area2D" parent="."]
+[node name="Radius" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+[node name="Radius_attacki" type="CollisionShape2D" parent="Radius"]
 position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_f87vc")
 disabled = true
@@ -438,7 +525,7 @@ disabled = true
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="zone"]
+[node name="Zona_attaki" type="CollisionShape2D" parent="zone"]
 position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_qhqle")
 
@@ -447,8 +534,39 @@ libraries = {
 &"": SubResource("AnimationLibrary_vgurf")
 }
 
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+visible = false
+self_modulate = Color(0.66, 0.0198, 0.0304698, 0.870588)
+offset_left = -19.0
+offset_top = -19.0
+offset_right = 19.0
+offset_bottom = -7.0
+nine_patch_stretch = true
+texture_under = ExtResource("3_b7koy")
+texture_progress = ExtResource("4_yvcfn")
+
+[node name="Node2D" type="Node2D" parent="."]
+scale = Vector2(0.2, 0.2)
+
+[node name="take_damage" type="AnimationPlayer" parent="Node2D"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_kqmod")
+}
+
+[node name="hp_damage" type="Label" parent="Node2D"]
+self_modulate = Color(0.884314, 3.20069e-06, 1.15514e-06, 1)
+z_index = 1
+offset_left = -30.0
+offset_top = -85.0
+offset_right = 15.0
+offset_bottom = -50.0
+scale = Vector2(1.5, 1.5)
+theme_override_font_sizes/font_size = 25
+text = "-20"
+
 [connection signal="body_entered" from="detector" to="." method="_on_detector_body_entered"]
 [connection signal="body_exited" from="detector" to="." method="_on_detector_body_exited"]
-[connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
+[connection signal="body_entered" from="Radius" to="." method="_on_hit_box_body_entered"]
 [connection signal="body_entered" from="zone" to="." method="_on_zone_body_entered"]
 [connection signal="body_exited" from="zone" to="." method="_on_zone_body_exited"]

@@ -483,7 +483,7 @@ animations = [{
 radius = 5.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fvtld"]
-radius = 12.0416
+radius = 10.0499
 
 [sub_resource type="Animation" id="Animation_hjaqi"]
 length = 0.8
@@ -962,7 +962,8 @@ script = ExtResource("1_hjaqi")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 1)
 sprite_frames = SubResource("SpriteFrames_6lu7o")
-animation = &"Death"
+animation = &"Attack_down"
+frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 12)
@@ -983,3 +984,4 @@ libraries = {
 }
 
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]

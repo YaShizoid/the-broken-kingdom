@@ -1,7 +1,10 @@
 extends CharacterBody2D
 
 @onready var anim = $AnimatedSprite2D
+@onready var hp_bar = $TextureProgressBar
 @onready var animP = $AnimationPlayer
+@onready var animDamage = $Node2D/take_damage
+@onready var hp_damage = $Node2D/hp_damage
 var speed = 50
 var player = null
 var can_move = true
@@ -9,6 +12,12 @@ var player_in = false
 var death = false
 
 func _physics_process(delta: float) -> void:
+	hp_damage.visible = false
+	hp_bar.value = Global.enemy_health
+	if Global.take_hit == true:
+		hp_damage.visible = true
+		animDamage.play("take_damage")
+		hp_bar.visible = true
 	if Global.enemy_health <= 0:
 		death = true
 		die()
@@ -32,6 +41,7 @@ func _on_detector_body_entered(body: Node2D) -> void:
 		player = body
 func die():
 	can_move = false
+	hp_bar.visible = false
 	Global.enemy_health = 0
 	animP.play("Death")
 	await animP.animation_finished

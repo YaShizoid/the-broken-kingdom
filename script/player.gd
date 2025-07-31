@@ -121,7 +121,13 @@ func attack():
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.name == "enemy":
-		Global.enemy_health -= 30
+		Global.take_hit = true
+		Global.enemy_health -= 20
 
 func _on_timer_timeout() -> void:
 	can_attack = true
+
+
+func _on_hitbox_body_exited(body: Node2D) -> void:
+	if body.name == "enemy":
+		Global.take_hit = false
