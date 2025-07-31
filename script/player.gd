@@ -1,15 +1,27 @@
 extends CharacterBody2D
+
 enum {
 	DOWN,
 	UP,
 	LEFT,
 	RIGHT
 }
+
 @onready var anim = $AnimatedSprite2D
+
 @onready var animP = $AnimationPlayer
+
+@onready var timer = $"../Timer"
+
 var speed = 100
+
 var idle_dir = DOWN
+
 var can_move = true
+
+var can_attack = true
+
+var attack_cooldown = 0.85
 
 func _physics_process(_delta: float) -> void:
 	if Global.player_health <= 0:
@@ -21,7 +33,7 @@ func _physics_process(_delta: float) -> void:
 	if !can_move:
 		return
 	run()
-	if Input.is_action_just_pressed('attack'):
+	if Input.is_action_just_pressed('attack') and can_attack == true:
 		attack()
 	elif Input.is_action_pressed("up"):
 		up_move()
@@ -35,24 +47,29 @@ func _physics_process(_delta: float) -> void:
 		idle()
 	
 	move_and_slide()
+
 func up_move():
 	anim.play("Up")
 	velocity = Vector2(0, -speed)
 	idle_dir = UP
+
 func down_move():
 	anim.play("Down")
 	velocity = Vector2(0, speed)
 	idle_dir = DOWN
+
 func left_move():
 	anim.flip_h = true
 	anim.play("Front")
 	velocity = Vector2(-speed, 0)
 	idle_dir = LEFT
+
 func right_move():
 	anim.flip_h = false
 	anim.play("Front")
 	velocity = Vector2(speed, 0)
 	idle_dir = RIGHT
+
 func idle():
 	velocity.x = 0
 	velocity.y = 0
@@ -68,28 +85,43 @@ func idle():
 			RIGHT:
 				anim.flip_h = false
 				anim.play("Idle_front")
+
 func run():
 	if Input.is_action_pressed('run'):
 		speed = 200
 	else:
 		speed = 100
+
 func attack():
 	can_move = false
+	can_attack = false
+	timer.start(attack_cooldown)
 	velocity = Vector2.ZERO
 	if velocity == Vector2.ZERO:
 		match idle_dir:
 			DOWN:
 				animP.play("Attack_down")
+				await anim.animation_finished
+				can_move = true
+				animP.play("Idle_down")
 			UP:
 				animP.play("Attack_up")
+				await anim.animation_finished
+				can_move = true 
 			LEFT:
 				anim.flip_h = true
 				animP.play("Attack_left")
+				await anim.animation_finished
+				can_move = true
 			RIGHT:
 				anim.flip_h = false
 				animP.play("Attack_right")
-	await anim.animation_finished
-	can_move = true
+				await anim.animation_finished
+				can_move = true
+
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.name == "enemy":
 		Global.enemy_health -= 30
+
+func _on_timer_timeout() -> void:
+	can_attack = true

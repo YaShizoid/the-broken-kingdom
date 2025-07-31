@@ -1,7 +1,7 @@
 [gd_scene load_steps=24 format=3 uid="uid://cf55qtwyek5rb"]
 
 [ext_resource type="Texture2D" uid="uid://cc48w6kvtsdeo" path="res://romario-tileMap/decor_16x16.png" id="1_7ghph"]
-[ext_resource type="Script" uid="uid://dc5nae6j4h4sh" path="res://script/label.gd" id="1_f345f"]
+[ext_resource type="Script" uid="uid://cr54sagyhhktt" path="res://script/label.gd" id="1_f345f"]
 [ext_resource type="PackedScene" uid="uid://bwli4b6843s0n" path="res://scene/player.tscn" id="1_pjass"]
 [ext_resource type="Texture2D" uid="uid://dudkhypui8lyh" path="res://romario-tileMap/Fences.png" id="2_na5tu"]
 [ext_resource type="Texture2D" uid="uid://cbjkkvhqyj5wm" path="res://romario-tileMap/grass.png" id="3_jsnws"]
@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://d104ai2athhr1" path="res://romario-tileMap/Outdoor_Decor_Free.png" id="8_hnm4a"]
 [ext_resource type="Texture2D" uid="uid://bs22elhqxsbwa" path="res://romario-tileMap/plains.png" id="9_e4vd1"]
 [ext_resource type="PackedScene" uid="uid://c2t4gyw6syd8r" path="res://scene/enemy.tscn" id="11_na5tu"]
-[ext_resource type="Script" uid="uid://dqwgypvf2c1cx" path="res://script/camera_2d.gd" id="13_bqa5m"]
+[ext_resource type="Script" uid="uid://bqqip3rmqlgbf" path="res://script/camera_2d.gd" id="13_bqa5m"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1402k"]
 texture = ExtResource("1_7ghph")
@@ -555,7 +555,9 @@ limit_left = 0
 limit_top = 0
 limit_right = 1150
 limit_bottom = 650
-position_smoothing_speed = 2.0
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
 script = ExtResource("13_bqa5m")
 
 [node name="collision" type="StaticBody2D" parent="."]
@@ -574,3 +576,7 @@ polygon = PackedVector2Array(118, -14, 118, -7, 96, -7, 96, -14)
 
 [node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="collision"]
 polygon = PackedVector2Array(-25, -11, -25, -13, -18, -13, -18, -11)
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="player" method="_on_timer_timeout"]

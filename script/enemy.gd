@@ -50,7 +50,7 @@ func _on_zone_body_entered(body: Node2D) -> void:
 func _on_zone_body_exited(body: Node2D) -> void:
 	if body.name == "player":
 		player_in = false
-	
+
 func attack():
 	while player_in:
 		velocity = Vector2.ZERO
@@ -62,4 +62,3 @@ func shaking_true():
 	Global.damage = true
 func shaking_false():
 	Global.damage = false
-	

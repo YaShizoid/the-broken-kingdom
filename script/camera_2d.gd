@@ -3,14 +3,28 @@ var zoom_speed = 0.1
 var min_zoom = 1.3
 var max_zoom = 2.8
 var can_zome = true
-var original_pos
-
-func _ready() -> void:
-	original_pos = position
-	
-func _process(delta: float) -> void:
+var shake_power := 0.0
+var shake_until := 0.0
+var shake_next := 0.0
+var shake_offset := Vector2.ZERO
+func _process(delta):
 	if Global.damage:
-		shake_camera()
+		shake(0.1)
+	
+	if shake_until < Time.get_ticks_msec():
+		offset = lerp(offset, Vector2.ZERO, delta * 10)
+		return
+		
+	if shake_next < Time.get_ticks_msec():
+		shake_offset = Vector2(randf_range(-1,1), randf_range(-1,1)).normalized() * shake_power
+		shake_next = Time.get_ticks_msec() + 25
+	offset = lerp(offset, shake_offset, delta)
+func shake(s, p = 100):
+	shake_until = Time.get_ticks_msec() + s * 1000
+	shake_power = p
+	
+	
+
 
 func _input(event: InputEvent) -> void:
 	if can_zome and event is InputEventMouseButton:
@@ -18,20 +32,3 @@ func _input(event: InputEvent) -> void:
 			zoom =(zoom - Vector2(zoom_speed, zoom_speed)).clamp(Vector2(min_zoom, min_zoom), Vector2(max_zoom, max_zoom))
 		elif event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			zoom =(zoom + Vector2(zoom_speed, zoom_speed)).clamp(Vector2(min_zoom, min_zoom), Vector2(max_zoom, max_zoom))
-
-func shake_camera():
-	if !can_zome:
-		return
-	
-	can_zome = false
-	
-	var tween = create_tween()
-	var shake_str = 80.0
-	var shake_time = 0.01
-	
-	
-	tween.tween_property(self, "position", original_pos + Vector2(shake_str, shake_str), shake_time)
-	tween.tween_property(self, "position", original_pos - Vector2(shake_str, shake_str), shake_time)
-	tween.tween_property(self, "position", original_pos, shake_time)
-	await  get_tree().create_timer(0,05).timeout
-	can_zome = true

@@ -184,13 +184,13 @@ animations = [{
 radius = 109.041
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yvcfn"]
-radius = 6.08276
+radius = 15.0333
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f87vc"]
-radius = 22.0227
+radius = 13.0384
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qhqle"]
-radius = 11.0
+radius = 17.0
 
 [sub_resource type="Animation" id="Animation_8u16h"]
 length = 2.0
@@ -262,7 +262,7 @@ tracks/5/path = NodePath(".")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.879467, 1.24033),
+"times": PackedFloat32Array(1, 1.24033),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
@@ -409,6 +409,7 @@ collision_layer = 4
 script = ExtResource("1_f87vc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 1)
 sprite_frames = SubResource("SpriteFrames_n0g06")
 animation = &"Attack"
 autoplay = "Idle"
@@ -418,11 +419,9 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detector"]
-visible = false
 shape = SubResource("CircleShape2D_b7koy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, 2)
 shape = SubResource("CircleShape2D_yvcfn")
 
@@ -431,7 +430,6 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-visible = false
 position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_f87vc")
 disabled = true
@@ -441,7 +439,6 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="zone"]
-visible = false
 position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_qhqle")
 
