@@ -15,6 +15,7 @@ func _physics_process(delta: float) -> void:
 	hp_damage.visible = false
 	hp_bar.value = Global.enemy_health
 	if Global.take_hit == true:
+		hp_damage.text = "-" + str(Global.damage_to_display)
 		hp_damage.visible = true
 		animDamage.play("take_damage")
 		hp_bar.visible = true

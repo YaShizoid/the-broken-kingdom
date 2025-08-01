@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cf55qtwyek5rb"]
+[gd_scene load_steps=33 format=3 uid="uid://cf55qtwyek5rb"]
 
 [ext_resource type="Texture2D" uid="uid://cc48w6kvtsdeo" path="res://romario-tileMap/decor_16x16.png" id="1_7ghph"]
 [ext_resource type="Script" uid="uid://dho30c4umbj2e" path="res://script/world.gd" id="1_bqa5m"]
@@ -15,9 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://c2t4gyw6syd8r" path="res://scene/enemy.tscn" id="11_na5tu"]
 [ext_resource type="Script" uid="uid://bqqip3rmqlgbf" path="res://script/camera_2d.gd" id="13_bqa5m"]
 [ext_resource type="Texture2D" uid="uid://dcl0tp8bdpern" path="res://circle.png" id="15_a0bac"]
-[ext_resource type="Texture2D" uid="uid://c8xdl8ymd5ysg" path="res://Sprite-0003.png" id="16_e4vd1"]
-[ext_resource type="Texture2D" uid="uid://b6chk5jx28b6p" path="res://Sprite-0001.png" id="17_1402k"]
-[ext_resource type="Texture2D" uid="uid://depkm3fwm2s8n" path="res://Sprite-0002 (1).png" id="18_ol7uo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1402k"]
 texture = ExtResource("1_7ghph")
@@ -751,7 +748,7 @@ layer_4/tile_data = PackedInt32Array(1376281, 131079, 1, 851993, 131079, 1, 7209
 
 [node name="player" parent="." instance=ExtResource("1_pjass")]
 y_sort_enabled = true
-position = Vector2(572, 277)
+position = Vector2(576, 242)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 zoom = Vector2(2.5, 2.5)
@@ -808,18 +805,6 @@ offset_left = 7.0
 offset_top = 44.0
 offset_right = 47.0
 offset_bottom = 67.0
-
-[node name="hp-bar" type="TextureProgressBar" parent="CanvasLayer"]
-offset_left = 2.0
-offset_top = 2.0
-offset_right = 177.0
-offset_bottom = 43.0
-nine_patch_stretch = true
-texture_under = ExtResource("16_e4vd1")
-texture_over = ExtResource("17_1402k")
-texture_progress = ExtResource("18_ol7uo")
-tint_over = Color(0.494508, 0.436245, 0.373642, 1)
-tint_progress = Color(0.693793, 0.0286376, 0.0511062, 1)
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(552, 240)

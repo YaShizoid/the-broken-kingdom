@@ -13,6 +13,10 @@ enum {
 
 @onready var timer = $"../Timer"
 
+@onready var stamina_bar = $"CanvasLayer/stamina-bar"
+
+@onready var hp_bar = $"CanvasLayer/hp-bar"
+
 var speed = 100
 
 var idle_dir = DOWN
@@ -23,7 +27,17 @@ var can_attack = true
 
 var attack_cooldown = 0.85
 
-func _physics_process(_delta: float) -> void:
+var stamina = 100
+
+var max_stamina = 100
+
+var stamina_minus = 20
+
+var stamina_regen = 10
+
+func _physics_process(delta: float) -> void:
+	hp_bar.value = Global.player_health
+	stamina_bar.value = stamina
 	if Global.player_health <= 0:
 		Global.player_health = 0
 		animP.play("Death")
@@ -32,7 +46,7 @@ func _physics_process(_delta: float) -> void:
 		Global.end = true
 	if !can_move:
 		return
-	run()
+	run(delta)
 	if Input.is_action_just_pressed('attack') and can_attack == true:
 		attack()
 	elif Input.is_action_pressed("up"):
@@ -85,12 +99,19 @@ func idle():
 			RIGHT:
 				anim.flip_h = false
 				anim.play("Idle_front")
-
-func run():
-	if Input.is_action_pressed('run'):
+	
+func run(delta):
+	if Input.is_action_pressed("run") and stamina > 0:
 		speed = 200
+		stamina -= stamina_minus * delta
+		if stamina <= 0:
+			stamina = 0
+			speed = 100
 	else:
 		speed = 100
+		stamina += stamina_regen * delta
+		if stamina >= max_stamina:
+			stamina = max_stamina
 
 func attack():
 	can_move = false
@@ -121,8 +142,17 @@ func attack():
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.name == "enemy":
+		var is_crit = randf() < Global.chance_crit
+		var original_damage = Global.player_damage
+		
+		Global.player_damage *= 2 if is_crit else 1
+		Global.enemy_health -= Global.player_damage
 		Global.take_hit = true
-		Global.enemy_health -= 20
+		
+		var damage_to_display = Global.player_damage
+		await get_tree().process_frame
+		Global.player_damage = original_damage
+		Global.damage_to_display = damage_to_display
 
 func _on_timer_timeout() -> void:
 	can_attack = true

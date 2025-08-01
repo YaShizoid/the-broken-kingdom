@@ -429,34 +429,6 @@ _data = {
 &"Walk": SubResource("Animation_ulb22")
 }
 
-[sub_resource type="Animation" id="Animation_vgurf"]
-resource_name = "take_damage"
-length = 0.7
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Node2D/hp_damage:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.884314, 3.20069e-06, 1.15514e-06, 1), Color(0.88, 0, 0, 0.0313726)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Node2D/hp_damage:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-30, -75), Vector2(-35, -350)]
-}
-
 [sub_resource type="Animation" id="Animation_kqmod"]
 length = 0.001
 tracks/0/type = "value"
@@ -482,6 +454,34 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-30, -85)]
+}
+
+[sub_resource type="Animation" id="Animation_vgurf"]
+resource_name = "take_damage"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D/hp_damage:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.884314, 3.20069e-06, 1.15514e-06, 1), Color(0.88, 0, 0, 0.0313726)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node2D/hp_damage:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.533333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-30, -145), Vector2(-35, -350)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kqmod"]
@@ -555,15 +555,15 @@ libraries = {
 }
 
 [node name="hp_damage" type="Label" parent="Node2D"]
+modulate = Color(1, 1, 1, 0.462745)
 self_modulate = Color(0.884314, 3.20069e-06, 1.15514e-06, 1)
 z_index = 1
 offset_left = -30.0
-offset_top = -85.0
+offset_top = -145.0
 offset_right = 15.0
-offset_bottom = -50.0
+offset_bottom = -110.0
 scale = Vector2(1.5, 1.5)
 theme_override_font_sizes/font_size = 25
-text = "-20"
 
 [connection signal="body_entered" from="detector" to="." method="_on_detector_body_entered"]
 [connection signal="body_exited" from="detector" to="." method="_on_detector_body_exited"]
