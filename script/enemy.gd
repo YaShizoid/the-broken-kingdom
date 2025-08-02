@@ -73,3 +73,7 @@ func shaking_true():
 	Global.damage = true
 func shaking_false():
 	Global.damage = false
+
+
+func _on_player_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	pass # Replace with function body.

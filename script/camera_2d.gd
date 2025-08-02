@@ -32,3 +32,7 @@ func _input(event: InputEvent) -> void:
 			zoom =(zoom - Vector2(zoom_speed, zoom_speed)).clamp(Vector2(min_zoom, min_zoom), Vector2(max_zoom, max_zoom))
 		elif event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			zoom =(zoom + Vector2(zoom_speed, zoom_speed)).clamp(Vector2(min_zoom, min_zoom), Vector2(max_zoom, max_zoom))
+
+
+func _on_player_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	pass # Replace with function body.

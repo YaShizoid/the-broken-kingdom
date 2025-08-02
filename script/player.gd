@@ -11,6 +11,8 @@ enum {
 
 @onready var animP = $AnimationPlayer
 
+@onready var sprite = $"../Sprite2D"
+
 @onready var timer = $"../Timer"
 
 @onready var stamina_bar = $"CanvasLayer/stamina-bar"
@@ -59,8 +61,12 @@ func _physics_process(delta: float) -> void:
 		right_move()
 	else:
 		idle()
-	
+	get_input()
 	move_and_slide()
+
+func get_input():
+	var input_direction = Input.get_vector("left", "right", "up", "down")
+	velocity = input_direction * speed
 
 func up_move():
 	anim.play("Up")
@@ -161,3 +167,10 @@ func _on_timer_timeout() -> void:
 func _on_hitbox_body_exited(body: Node2D) -> void:
 	if body.name == "enemy":
 		Global.take_hit = false
+		
+func _unhandled_input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			var target_position = get_global_mouse_position()
+			var direction = (target_position - global_position).normalized()
+			velocity = direction * speed

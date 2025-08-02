@@ -400,11 +400,12 @@ texture = ExtResource("8_hnm4a")
 3:5/0 = 0
 4:5/0 = 0
 4:5/0/z_index = 1
+4:5/0/y_sort_origin = -7
 0:6/0 = 0
 1:6/0 = 0
 2:6/0 = 0
 4:6/0 = 0
-4:6/0/y_sort_origin = -5
+4:6/0/y_sort_origin = -14
 0:7/0 = 0
 1:7/0 = 0
 2:7/0 = 0
@@ -814,5 +815,7 @@ energy = 1.5
 shadow_color = Color(0.654902, 0.517647, 0, 0)
 texture = ExtResource("15_a0bac")
 texture_scale = 0.01
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
 
 [connection signal="timeout" from="Timer" to="player" method="_on_timer_timeout"]
