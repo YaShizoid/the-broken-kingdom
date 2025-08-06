@@ -7,6 +7,8 @@ enum {
 	RIGHT
 }
 
+@export var FIREBALL:PackedScene
+
 @onready var anim = $AnimatedSprite2D
 
 @onready var animP = $AnimationPlayer
@@ -19,7 +21,7 @@ enum {
 
 @onready var hp_bar = $"CanvasLayer/hp-bar"
 
-var speed = 100
+var speed = 70
 
 var idle_dir = DOWN
 
@@ -38,6 +40,7 @@ var stamina_minus = 20
 var stamina_regen = 10
 
 func _physics_process(delta: float) -> void:
+	
 	hp_bar.value = Global.player_health
 	stamina_bar.value = stamina
 	if Global.player_health <= 0:
@@ -51,15 +54,17 @@ func _physics_process(delta: float) -> void:
 	run(delta)
 	if Input.is_action_just_pressed('attack') and can_attack == true:
 		attack()
-	elif Input.is_action_pressed("up"):
-		up_move()
-	elif Input.is_action_pressed("down"):
-		down_move()
-	elif Input.is_action_pressed("left"):
-		left_move()
-	elif Input.is_action_pressed("right"):
-		right_move()
+	elif velocity.length() > 0:
+		if Input.is_action_pressed("up"):
+			up_move()
+		elif Input.is_action_pressed("down"):
+			down_move()
+		elif Input.is_action_pressed("left"):
+			left_move()
+		elif Input.is_action_pressed("right"):
+			right_move()
 	else:
+		
 		idle()
 	get_input()
 	move_and_slide()
@@ -136,7 +141,7 @@ func attack():
 				await anim.animation_finished
 				can_move = true 
 			LEFT:
-				anim.flip_h = true
+				anim.flip_h = false
 				animP.play("Attack_left")
 				await anim.animation_finished
 				can_move = true
@@ -167,10 +172,3 @@ func _on_timer_timeout() -> void:
 func _on_hitbox_body_exited(body: Node2D) -> void:
 	if body.name == "enemy":
 		Global.take_hit = false
-		
-func _unhandled_input(event):
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			var target_position = get_global_mouse_position()
-			var direction = (target_position - global_position).normalized()
-			velocity = direction * speed

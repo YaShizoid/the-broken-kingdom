@@ -1,0 +1,2 @@
+extends TargetActionView
+class_name FireBall
