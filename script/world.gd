@@ -2,7 +2,6 @@ extends Node2D
 @onready var animP = $AnimationPlayer
 @onready var days = $CanvasLayer/days
 @onready var time = $CanvasLayer/time
-
 var days_count = -1
 
 

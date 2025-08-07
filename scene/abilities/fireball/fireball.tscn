@@ -1,11 +1,70 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqofqw0i54ofr"]
+[gd_scene load_steps=14 format=3 uid="uid://cub7xe3sclcep"]
 
-[ext_resource type="Script" uid="uid://dmemtoxrj6024" path="res://scene/abilities/fireball/fireball.gd" id="1_i58jw"]
-[ext_resource type="Texture2D" uid="uid://ji24fkuyeyns" path="res://ассеты для игры/FB001.png" id="2_vn1yo"]
+[ext_resource type="Script" uid="uid://dt3jpsxxlew8j" path="res://scene/abilities/Fireball/fireball.gd" id="1_rheol"]
+[ext_resource type="Texture2D" uid="uid://ji24fkuyeyns" path="res://ассеты для игры/FB001.png" id="2_cwy6v"]
+[ext_resource type="Texture2D" uid="uid://dhbk2168yp66i" path="res://ассеты для игры/FB004.png" id="2_pxyd8"]
+[ext_resource type="Texture2D" uid="uid://bq0xoftlfq2ae" path="res://ассеты для игры/FB002.png" id="3_2u1o3"]
+[ext_resource type="Texture2D" uid="uid://1bfs48fcmry5" path="res://ассеты для игры/FB003.png" id="4_vec2d"]
+[ext_resource type="Texture2D" uid="uid://k0qqp5ibomxw" path="res://ассеты для игры/FB005.png" id="6_ysrv2"]
 
-[node name="Fireball" type="Node"]
-script = ExtResource("1_i58jw")
-metadata/_custom_type_script = "uid://b7cqfbavl3vi6"
+[sub_resource type="AtlasTexture" id="AtlasTexture_45qb0"]
+atlas = ExtResource("2_cwy6v")
+region = Rect2(0, 0, 64, 32)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_vn1yo")
+[sub_resource type="AtlasTexture" id="AtlasTexture_14ar6"]
+atlas = ExtResource("3_2u1o3")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g43e7"]
+atlas = ExtResource("4_vec2d")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d86y5"]
+atlas = ExtResource("2_pxyd8")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k48li"]
+atlas = ExtResource("6_ysrv2")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7rsrk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_45qb0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_14ar6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g43e7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d86y5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k48li")
+}],
+"loop": true,
+"name": &"Fireball",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2u1o3"]
+height = 32.0
+
+[node name="Fireball" type="Node2D"]
+script = ExtResource("1_rheol")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7rsrk")
+animation = &"Fireball"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(5, -1)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_2u1o3")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

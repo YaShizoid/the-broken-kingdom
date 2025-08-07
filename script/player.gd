@@ -7,13 +7,15 @@ enum {
 	RIGHT
 }
 
-@export var FIREBALL:PackedScene
+
 
 @onready var anim = $AnimatedSprite2D
 
+
+
 @onready var animP = $AnimationPlayer
 
-@onready var sprite = $"../Sprite2D"
+@onready var fireball_scene = preload("res://scene/abilities/Fireball/Fireball.tscn")
 
 @onready var timer = $"../Timer"
 
@@ -23,6 +25,7 @@ enum {
 
 var speed = 70
 
+var direction : Vector2 = Vector2.ZERO # Направление движения игрока
 var idle_dir = DOWN
 
 var can_move = true
@@ -125,10 +128,12 @@ func run(delta):
 			stamina = max_stamina
 
 func attack():
+	Input.action_press("left_click")
 	can_move = false
 	can_attack = false
 	timer.start(attack_cooldown)
 	velocity = Vector2.ZERO
+	var shoot_direction : Vector2
 	if velocity == Vector2.ZERO:
 		match idle_dir:
 			DOWN:
@@ -170,5 +175,32 @@ func _on_timer_timeout() -> void:
 
 
 func _on_hitbox_body_exited(body: Node2D) -> void:
+	
 	if body.name == "enemy":
 		Global.take_hit = false
+
+func _input(event):
+	# Обработка ввода для стрельбы
+	if Input.is_action_just_pressed("left_click"):
+		shoot()
+
+func shoot():
+	# Создаем экземпляр фаерболла
+	var fireball = fireball_scene.instantiate()
+
+	# Устанавливаем позицию фаерболла (рядом с игроком)
+	fireball.global_position = global_position
+
+	# Определяем направление полета фаерболла (в зависимости от направления игрока или мыши)
+	var shoot_direction : Vector2
+	if direction != Vector2.ZERO:
+		shoot_direction = direction # Направление движения игрока
+	else:
+		# Если игрок стоит, стреляем в направлении мыши
+		shoot_direction = (get_global_mouse_position() - global_position).normalized()
+
+	# Задаем направление полета фаерболла
+	fireball.set_direction(shoot_direction)
+
+	# Добавляем фаерболл на сцену (к родителю игрока)
+	get_parent().add_child(fireball)

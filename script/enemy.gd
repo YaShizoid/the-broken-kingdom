@@ -10,6 +10,29 @@ var player = null
 var can_move = true
 var player_in = false
 var death = false
+var health = 100  # Начальное здоровье противника
+var max_health = 100 # Максимальное здоровье
+var is_dead = false
+@export var death_effect : PackedScene # Префаб эффекта смерти
+
+# Сигнал (можно использовать, чтобы уведомить другие части игры о смерти)
+signal health_changed(new_health, max_health)
+signal died
+
+func _ready():
+	emit_signal("health_changed", health, max_health)
+
+func take_damage(damage_amount):
+	if is_dead:
+		return # Ничего не делаем, если противник уже мертв
+	health -= damage_amount
+	emit_signal("health_changed", health, max_health) # Оповещаем об изменении здоровья
+
+	print("Противник получил ", damage_amount, " урона.  Здоровье: ", health)  # Отладочный вывод
+
+	if health <= 0:
+		health = 0
+		die()  # Функция, обрабатывающая смерть
 
 func _physics_process(delta: float) -> void:
 	hp_damage.visible = false
